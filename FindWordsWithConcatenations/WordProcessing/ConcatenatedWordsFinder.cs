@@ -21,7 +21,7 @@ namespace FindWordsWithConcatenations.WordProcessing {
             _stringCountsBySize = new List<CounterDictionary>();
             _stringsToDisplay = new List<string>();
             PopulateDictionaries(wordCounter);
-            foreach (var word in DictionaryOfWordsOfLengthN(6).WordCounts) {
+            foreach (var word in DictionaryOfWordsOfLengthN(targetStringsSize).WordCounts) {
                 if (FindAnyConcatenationOfTwoStrings(word.Key)) _stringsToDisplay.Add(word.Key);
             }
         }
