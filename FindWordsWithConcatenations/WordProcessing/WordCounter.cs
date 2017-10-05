@@ -31,10 +31,14 @@ namespace FindWordsWithConcatenations.WordProcessing {
 
 		public CounterDictionary Dictionary => _wordCounts;
 
+		public int Count() {
+			return _wordCounts.TotalCount;
+		}
+
 		public void PrintToConsole() {
 			Console.WriteLine("Here are the words and their counts in alphabetical order:");
 			foreach (var word in _sortedWords) {
-				Console.WriteLine("{0} {1}", word, _wordCounts.Words[word]);
+				Console.WriteLine("{0} {1}", word, _wordCounts.WordCounts[word]);
 			}
 		}
 
@@ -46,7 +50,7 @@ namespace FindWordsWithConcatenations.WordProcessing {
 		}
 
 		private void SortAlphabetically() {
-			_sortedWords = _wordCounts.Words.Keys.ToList();
+			_sortedWords = _wordCounts.WordCounts.Keys.ToList();
 			_sortedWords.Sort();
 		}
 	}

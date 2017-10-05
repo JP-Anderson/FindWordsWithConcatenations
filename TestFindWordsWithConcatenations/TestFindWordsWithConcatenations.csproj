@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestData\ProvidedTestData.txt" />
+    <Content Include="TestData\ProvidedTestData2.txt" />
     <Content Include="TestData\SimpleTextFile.txt" />
     <Content Include="TestData\stoker-dracula.txt" />
     <Content Include="TestData\stoker-dracula-32-times.txt" />

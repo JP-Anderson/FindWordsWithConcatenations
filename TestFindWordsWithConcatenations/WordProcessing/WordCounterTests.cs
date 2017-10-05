@@ -32,8 +32,21 @@ namespace TestFindWordsWithConcatenations.WordProcessing {
         }
 
         [Test]
-        public void WordCounterIgnoresPunctuation() {
-            var wordCounter = WordCounter.CountWordsFromString("");
+        public void TotalWordCountIsUpdated() {
+            var wordCounter = WordCounter.CountWordsFromString("this sentence has the word this in it twice");
+            Assert.AreEqual(9, wordCounter.Count());
+        }
+
+        [Test]
+        public void WordCounterSplitsOnPunctuation() {
+            var wordCounter = WordCounter.CountWordsFromString("it}{[] works//()\\.with spaces;#:=+-,-and punctuation!");
+            Assert.AreEqual(6, wordCounter.Count());
+        }
+        
+        [Test]
+        public void WordCounterSplitsOnNewLine() {
+            var wordCounter = WordCounter.CountWordsFromString("it even works with " + Environment.NewLine + " new lines!");
+            Assert.AreEqual(6, wordCounter.Count());
         }
 
         /// <summary>
@@ -51,7 +64,7 @@ namespace TestFindWordsWithConcatenations.WordProcessing {
         /// Test over 32 copies of Dracula (26MB of text), takes 3.6 secs on my machine.
         /// Left as explicit to keep the tests nice and quick.
         /// </summary>
-        [Explicit]
+        [Explicit, Test]
         public void WordCounterCountsWordsForVeryLargeInput() {
             var wordCounter = WordCounter.CountWordsFromTestFile("stoker-dracula-32-times.txt");
             Assert.AreEqual(31 * 32, wordCounter.Dictionary.GetWordCount("dracula"));

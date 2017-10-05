@@ -7,46 +7,50 @@ namespace FindWordsWithConcatenations.Utilities.Collections {
 	/// CounterDictionary contains a wordCounts mapping strings to integer counts of the string
 	/// </summary>
 	public class CounterDictionary {
-		
-		private readonly Dictionary<string, int> wordCounts;
-		private static readonly Regex invalidCharacterRegex = new Regex("[^a-zA-Z0-9 -]");
 
+		private static readonly Regex InvalidCharacterRegex = new Regex("[^a-zA-Z0-9 -]");
+		private readonly Dictionary<string, int> _wordCounts;
+		private int _totalCount;
+		
 		public CounterDictionary() {
-			wordCounts = new Dictionary<string, int>();
+			_wordCounts = new Dictionary<string, int>();
 		}
 		
-		public Dictionary<string, int> Words => wordCounts;
+		public Dictionary<string, int> WordCounts => _wordCounts;
+		public int TotalCount => _totalCount;
 
 		public void Add(string word) {
 			word = SanitiseInput(word);
 			if (word == "") return;
-			if (Contains(word)) wordCounts[word]++;
-			else wordCounts.Add(word, 1);
+			if (Contains(word)) _wordCounts[word]++;
+			else _wordCounts.Add(word, 1);
+			_totalCount++;
 		}
 
 		public void Add(string word, int number) {
 			word = SanitiseInput(word);
 			if (word == "") return;
-			if (Contains(word)) wordCounts[word] = wordCounts[word] + number;
-			else wordCounts.Add(word, number);
+			if (Contains(word)) _wordCounts[word] = _wordCounts[word] + number;
+			else _wordCounts.Add(word, number);
+			_totalCount += number;
 		}
 
 		private string SanitiseInput(string input) {
-			return invalidCharacterRegex.Replace(input.ToLower().Trim(), "");
+			return InvalidCharacterRegex.Replace(input.ToLower().Trim(), "");
 		}
 
-		public bool Contains(string word) { return wordCounts.ContainsKey(word); }
+		public bool Contains(string word) { return _wordCounts.ContainsKey(word); }
 
 		public int GetWordCount(string word) {
 			try {
-				return wordCounts[word];
+				return _wordCounts[word];
 			} catch (KeyNotFoundException) {
 				return -1;
 			}
 		}
-
+		
 		public Dictionary<string, int>.KeyCollection Keys() {
-			return wordCounts.Keys;
+			return _wordCounts.Keys;
 		}
 		
 	}
