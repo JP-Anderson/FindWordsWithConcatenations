@@ -52,6 +52,20 @@ namespace TestFindWordsWithConcatenations.WordProcessing {
         }
 
         [Test]
+        public void OneWordCannotBeConcatenatedWithItself() {
+            var input = "dodo do";
+            var wordsFinder = new ConcatenatedWordsFinder(WordCounter.CountWordsFromString(input), targetStringsSize: 4);
+            Assert.IsEmpty((ICollection) wordsFinder._stringsToDisplay);
+        }
+
+        [Test]
+        public void IdenticalWordsCanBeConcatenated() {
+            var input = "dodo do do";
+            var wordsFinder = new ConcatenatedWordsFinder(WordCounter.CountWordsFromString(input), targetStringsSize: 4);
+            Assert.Contains("dodo", (ICollection) wordsFinder._stringsToDisplay);
+        }
+
+        [Test]
         public void OneLetterWordAndFiveLetterWordConcatenationDetected() {
             var input = "jaguar caiman w alrus walrus monkey";
             var wordsFinder = new ConcatenatedWordsFinder(WordCounter.CountWordsFromString(input), targetStringsSize: 6);

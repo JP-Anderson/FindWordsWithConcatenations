@@ -47,11 +47,16 @@ namespace FindWordsWithConcatenations.WordProcessing {
             var midPoint = FindMidPoint();
             for (var i = 0; i <= iterations; i++) {
                 var startDictionary = _stringCountsBySize[i].WordCounts;
-                Dictionary<string, int> endDictionary;
-                endDictionary = i == midPoint 
-                    ? startDictionary 
-                    : _stringCountsBySize[iterations - i].WordCounts;
-                if (CanMakeWordFromTwoDictionaries(targetString, startDictionary, endDictionary)) return true;
+                if (i == midPoint) {
+                    // If we are in the mid point then we are trying to concatenate equal length strings.
+                    // So we will use the same word dictionary for both sides of the concatenation.
+                    if (CanMakeWordFromOneDictionary(targetString, startDictionary)) return true;
+                } else {
+                    // The lengths of the concatenated strings are different.
+                    // We will use two dictionaries with the different length strings.
+                    var endDictionary = _stringCountsBySize[iterations - i].WordCounts;
+                    if (CanMakeWordFromTwoDictionaries(targetString, startDictionary, endDictionary)) return true;
+                }
             }
             return false;
         }
@@ -61,13 +66,33 @@ namespace FindWordsWithConcatenations.WordProcessing {
             return -1;
         }
         
-        // Internal for testing from Test project
-        internal bool CanMakeWordFromTwoDictionaries(string target, Dictionary<string, int> startWords, Dictionary<string, int> endWords) {
+        private bool CanMakeWordFromTwoDictionaries(string target, Dictionary<string, int> startWords, Dictionary<string, int> endWords) {
             if (startWords.Count == 0 || endWords.Count == 0) return false;
             foreach (var startWord in startWords.Keys) {
                 if (target.Substring(0, startWord.Length) != startWord) continue;
-                if (endWords.Keys.Any(endWord => endWord == target.Substring(startWord.Length, endWord.Length))) {
-                    return true;
+                foreach (var endWord in endWords.Keys) {
+                    if (endWord == target.Substring(startWord.Length, endWord.Length)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        
+        private bool CanMakeWordFromOneDictionary(string target, Dictionary<string, int> words) {
+            if (words.Count == 0) return false;
+            var wordList =  new List<string>(words.Keys);
+            for (var i = 0; i < wordList.Count; i++) {
+                var startWord = wordList[i];
+                if (target.Substring(0, startWord.Length) != startWord) continue;
+                for (var j = 0; j < wordList.Count; j++) {
+                    // When comparing equal length strings, we have a special case to ensure we are not concatenating
+                    // the same word with itself, unless it actually appears multiple times!
+                    if (i == j && words[startWord] <= 1) continue;
+                    var endWord = wordList[j];
+                    if (endWord == target.Substring(startWord.Length, endWord.Length)) {
+                        return true;
+                    }
                 }
             }
             return false;
