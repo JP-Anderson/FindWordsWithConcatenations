@@ -5,4 +5,4 @@ install:
   - nuget install NUnit.Runners -Version 3.5.0 -OutputDirectory testrunner
 script:
   - xbuild ./FindWordsWithConcatenations.sln
-  - mono ./testrunner/NUnit.Runners.3.5.0/tools/nunit-console.exe ./TestFindWordsWithConcatenations/bin/Debug/TestFindWordsWithConcatenations.dll
+  - mono ./testrunner/NUnit.ConsoleRunner.3.5.0/tools/nunit-agent.exe ./TestFindWordsWithConcatenations/bin/Debug/TestFindWordsWithConcatenations.dll
