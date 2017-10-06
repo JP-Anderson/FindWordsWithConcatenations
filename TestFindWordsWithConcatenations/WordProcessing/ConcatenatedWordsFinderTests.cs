@@ -152,11 +152,11 @@ namespace TestFindWordsWithConcatenations.WordProcessing {
         }
         
         /// <summary>
-        /// Test over 32 copies of Dracula (26MB of text), takes 4.2 secs on my machine.
+        /// Test over 32 copies of Dracula (26MB of text), takes 3-4 secs on my machine.
         /// Left as explicit to keep the tests nice and quick.
         /// </summary>
         [Explicit, Test]
-        public void WordCounterCountsWordsForVeryLargeInput() {
+        public void WordsFinderCanProcessVeryLargeInput() {
             var wordCounter = WordCounter.CountWordsFromTestFile("stoker-dracula-32-times.txt");
             var wordsFinder = new ConcatenatedWordsFinder(wordCounter, targetStringsSize: 6);
         }
