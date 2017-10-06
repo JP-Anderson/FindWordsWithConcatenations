@@ -1,0 +1,6 @@
+*.dll
+/TestFindWordsWithConcatenations/bin/Debug
+/TestFindWordsWithConcatenations/obj/Debug
+/FindWordsWithConcatenations/bin/Debug
+/FindWordsWithConcatenations/obj/Debug
+/packages/NUnit.3.5.0
