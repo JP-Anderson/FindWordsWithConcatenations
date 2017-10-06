@@ -46,9 +46,11 @@ namespace TestFindWordsWithConcatenations.WordProcessing {
 
         [Test]
         public void OneWordCanBeConcatenatedForMultipleWords() {
-            var input = "key donkey do jaguar mon monkey";
+            var input = "key donkey don jaguar mon monkey";
             var wordsFinder = new ConcatenatedWordsFinder(WordCounter.CountWordsFromString(input), targetStringsSize: 6);
+            // both use key
             Assert.Contains("monkey", (ICollection) wordsFinder._stringsToDisplay);
+            Assert.Contains("donkey", (ICollection) wordsFinder._stringsToDisplay);
         }
 
         [Test]
