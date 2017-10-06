@@ -133,11 +133,18 @@ namespace TestFindWordsWithConcatenations.WordProcessing {
         }
         
         [Test]
-        public void ConcatenationsDetectedWithTargetStringOfOne() {
+        public void ConcatenationsDetectedWithTargetStringOfTwo() {
             var input = "a aa a";
             var wordsFinder = new ConcatenatedWordsFinder(WordCounter.CountWordsFromString(input), targetStringsSize: 2);
             Assert.Contains("aa", (ICollection) wordsFinder._stringsToDisplay);
             Assert.AreEqual(1, wordsFinder._stringsToDisplay.Count);
+        }
+
+        [Test]
+        public void ConcatenationWillNotOccurWithTargetStringOfOne() {
+            var input = "a b c";
+            var wordsFinder = new ConcatenatedWordsFinder(WordCounter.CountWordsFromString(input), targetStringsSize: 1);
+            Assert.IsEmpty((ICollection) wordsFinder._stringsToDisplay);
         }
 
         [Test]
