@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using FindWordsWithConcatenations.Utilities.Collections;
+using NUnit.Framework;
 
 namespace FindWordsWithConcatenations.WordProcessing {
 	public class WordCounter {
@@ -14,8 +15,8 @@ namespace FindWordsWithConcatenations.WordProcessing {
 		public static WordCounter CountWordsFromString(string text) { return new WordCounter(text); }
 
 		public static WordCounter CountWordsFromTestFile(string filename) {
-			var path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
-			return new WordCounter(File.ReadAllText(path + @"/../../TestData/" + filename));
+			var path = String.Format("{0}{1}{2}", TestContext.CurrentContext.TestDirectory, @"/../../TestData/", filename);
+			return new WordCounter(File.ReadAllText(path));
 		}
 
 		public static WordCounter CountWordsFromFile(string filepath) {
